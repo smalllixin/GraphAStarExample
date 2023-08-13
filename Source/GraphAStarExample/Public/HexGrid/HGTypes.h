@@ -141,7 +141,7 @@ struct FHFractional
 
 	FHFractional() {}
 
-	FHFractional(float q, float r, float s)
+	FHFractional(FVector::FReal q, FVector::FReal r, FVector::FReal s)
 	{
 		QRS.X = q;
 		QRS.Y = r;

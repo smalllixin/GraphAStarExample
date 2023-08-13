@@ -119,8 +119,8 @@ FHCubeCoord AHexGrid::WorldToHex(const FVector &Location)
 									  (Location.Z - TileLayout.Origin.Z))	// Z is useless here.
 	};
 
-	float q = ((TileOrientation.b0 * InternalLocation.X) + (TileOrientation.b1 * InternalLocation.Y));
-	float r = ((TileOrientation.b2 * InternalLocation.X) + (TileOrientation.b3 * InternalLocation.Y));
+	FVector::FReal q = ((TileOrientation.b0 * InternalLocation.X) + (TileOrientation.b1 * InternalLocation.Y));
+	FVector::FReal r = ((TileOrientation.b2 * InternalLocation.X) + (TileOrientation.b3 * InternalLocation.Y));
 	
 	FVector v{ (TileLayout.TileOrientation == EHTileOrientationFlag::FLAT) ? FVector(q, -q - r, r) : FVector(q, r, -q - r) };
 
@@ -130,7 +130,7 @@ FHCubeCoord AHexGrid::WorldToHex(const FVector &Location)
 
 FVector AHexGrid::SnapToGrid(const FVector &Location)
 {
-	float TempZ{ Location.Z };
+	FVector::FReal TempZ{ Location.Z };
 	FVector Result{ HexToWorld(WorldToHex(Location)) };
 	Result.Z = TempZ;
 	return Result;
@@ -139,13 +139,13 @@ FVector AHexGrid::SnapToGrid(const FVector &Location)
 
 FHCubeCoord AHexGrid::HexRound(const FHFractional &F)
 {
-	int32 q{ int32(FMath::RoundToDouble(F.QRS.X)) };
-	int32 r{ int32(FMath::RoundToDouble(F.QRS.Y)) };
-	int32 s{ int32(FMath::RoundToDouble(F.QRS.Z)) };
-
-	float q_diff{ FMath::Abs(q - F.QRS.X) };
-	float r_diff{ FMath::Abs(r - F.QRS.Y) };
-	float s_diff{ FMath::Abs(s - F.QRS.Z) };
+	int32 q{ static_cast<int32>(FMath::RoundToDouble(F.QRS.X)) };
+	int32 r{ static_cast<int32>(FMath::RoundToDouble(F.QRS.Y)) };
+	int32 s{ static_cast<int32>(FMath::RoundToDouble(F.QRS.Z)) };
+	
+	FVector::FReal q_diff{ FMath::Abs(q - F.QRS.X) };
+	FVector::FReal r_diff{ FMath::Abs(r - F.QRS.Y) };
+	FVector::FReal s_diff{ FMath::Abs(s - F.QRS.Z) };
 
 	if ((q_diff > r_diff) && (q_diff > s_diff))
 	{

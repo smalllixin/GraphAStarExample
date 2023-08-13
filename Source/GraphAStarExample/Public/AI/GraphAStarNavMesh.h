@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Gameframework/Actor.h"
+#include "NavMesh/NavMeshPath.h"
 #include "NavMesh/RecastNavMesh.h"
 #include "GraphAStarNavMesh.generated.h"
 
@@ -55,13 +57,13 @@ protected:
 struct FHexNavMeshPath : public FNavMeshPath
 {
 	FORCEINLINE
-	virtual float GetCostFromIndex(int32 PathPointIndex) const override
+	virtual FVector::FReal GetCostFromIndex(int32 PathPointIndex) const override
 	{
 		return CurrentPathCost;
 	}
 
 	FORCEINLINE
-	virtual float GetLengthFromPosition(FVector SegmentStart, uint32 NextPathPointIndex) const override
+	virtual double GetLengthFromPosition(FVector SegmentStart, uint32 NextPathPointIndex) const override
 	{
 		// We exclude the starting point so -1	
 		return PathPoints.Num() - 1;
